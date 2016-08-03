@@ -2,3 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+submission/*.aux
+submission/*.bbl
+submission/*.log
+submission/*.tex
+data/raw/* # ignore due to size
+

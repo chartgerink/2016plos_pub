@@ -1,5 +1,3 @@
-# Transparent project management template
+# Research project on publishing in the PLOS family of journals
 
-This project includes a folder structure to manage your research project. Each folder contains a readme file which provides a general idea of what to include. The `contributions.csv` file can be used to specify contributions in the research project. Note that this template is geared towards empirical projects.
-
-Additionally, not all projects require all parts of this template. The template is meant as a pruning template, where it is duplicated and subsequently adjusted to one's own needs. It is merely here to provide a framework to build on.
+PLOS provides an API to access information from publications. In this project, I will investigate multiple aspects. I have previously looked into a few things relating to [publication delays](https://github.com/chartgerink/2015lag), from which I will import a reasonable amount of code. I also wrote some code in another project [to investigate ghost authors](https://github.com/chartgerink/2016copilot2/blob/master/functions/download_extract_data_api.R) which I will reuse here.
