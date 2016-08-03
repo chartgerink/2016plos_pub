@@ -1,0 +1,85 @@
+\documentclass{article}
+
+\usepackage{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\title{Studying Public Library of Science publication trends}
+\author{Chris HJ Hartgerink}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+<<Download>>=
+suppressMessages(if(!require(rplos)){install.packages('rplos')})
+suppressMessages(if(!require(stringr)){install.packages('stringr')})
+
+# set fields to download
+fields <- c("accepted_date",
+            "article_type",
+            "author",
+            "author_affiliate",
+            "author_notes",
+            "body",
+            "copyright",
+            "competing_interest",
+            "conclusions",
+            "counter_total_all",
+            "counter_total_month",
+            "doc_type",
+            "editor",
+            "everything",
+            "figure_table_caption",
+            "financial_disclosure",
+            "introduction",
+            "journal",
+            "materials_and_methods",
+            "pagecount",
+            "publication_date",
+            "received_date",
+            "reference",
+            "results_and_discussion",
+            "subject",
+            "subject_facet",
+            "subject_hierarchy",
+            "subject_level_1",
+            "subject2",
+            "subject2_facet",
+            "subject2_hierarchy",
+            "subject2_level_1",
+            "supporting_information",
+            "title")
+
+# make sure only full documents are included (otherwise multiplicity)
+search <- '(doc_type:full)'
+# Get number of hits
+hits <- searchplos(q = search, fl = fields, limit = 1)$meta$numFound
+# Determine number of loops
+step <- 100
+loops <- as.integer(hits / step + ifelse(hits %% step > 0, 1, 0))
+
+# If downloads not finished, redownload
+# Cannot start at last loop because unsure about order persistence
+if(!file.exists(sprintf('data/raw/raw_%s.csv', loops)))
+{
+  for(i in 1:loops)
+  {
+    res <- searchplos(q = search, 
+                      fl = fields, 
+                      start = 1 + (i - 1) * step,
+                      limit = step)$data
+    res$journal <- tolower(res$journal)
+    write.csv(res, sprintf('data/raw/raw_%s.csv', i), row.names = FALSE)
+    
+    cat(sprintf('Just saved %s through %s\n', 
+                1 + (i - 1) * step,
+                1 + (i - 1) * step + step))
+    Sys.sleep(10)
+  }
+}
+@
+
+\end{document}

@@ -8,3 +8,4 @@ submission/*.log
 submission/*.tex
 data/raw/* # ignore due to size
 
+submission/manuscript.synctex.gz
