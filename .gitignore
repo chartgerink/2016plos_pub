@@ -6,6 +6,5 @@ submission/*.aux
 submission/*.bbl
 submission/*.log
 submission/*.tex
-data/raw/*.csv # ignore due to size
-
+data/raw/
 submission/manuscript.synctex.gz
