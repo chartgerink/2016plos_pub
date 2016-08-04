@@ -6,7 +6,7 @@
 \usepackage{natbib}
 \usepackage{hyperref}
 
-\title{Studying Public Library of Science publication trends}
+\title{Case Study: Publication trends in the Public Library of Science}
 \author{Chris HJ Hartgerink}
 
 \begin{document}
@@ -16,9 +16,11 @@
 <<Download>>=
 suppressMessages(if(!require(rplos)){install.packages('rplos')})
 suppressMessages(if(!require(stringr)){install.packages('stringr')})
+suppressMessages(if(!require(tm)){install.packages('tm')})
 
 # set fields to download
-fields <- c("accepted_date",
+fields <- c("id",
+            "accepted_date",
             "article_type",
             "author",
             "author_affiliate",
@@ -57,6 +59,7 @@ fields <- c("accepted_date",
 search <- '(doc_type:full)'
 # Get number of hits
 hits <- searchplos(q = search, fl = fields, limit = 1)$meta$numFound
+hits <- 100
 # Determine number of loops
 step <- 100
 loops <- as.integer(hits / step + ifelse(hits %% step > 0, 1, 0))
@@ -80,6 +83,31 @@ if(!file.exists(sprintf('data/raw/raw_%s.csv', loops)))
     Sys.sleep(10)
   }
 }
+@
+
+<<Article types>>=
+
+@
+
+
+<<Publication times>>=
+
+@
+
+<<Authors and contributions>>=
+
+@
+
+<<Ghost authorship>>=
+
+@
+
+<<Reference list>>=
+
+@
+
+<<Use of Supplemental Materials>>=
+
 @
 
 \end{document}
